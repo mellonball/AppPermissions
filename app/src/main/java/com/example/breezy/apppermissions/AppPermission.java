@@ -25,6 +25,6 @@ public class AppPermission {
         StringBuilder sb = new StringBuilder();
         sb.append("Permission Name: " + permissionName + "\n");
         sb.append("Permission Description: " + permissionDescription + "\n");
-        return "";
+        return sb.toString();
     }
 }

@@ -24,9 +24,12 @@ public final class JsonParserUtility {
         List<AppInfo> returnList = new ArrayList<>();
         JSONObject jObject = new JSONObject(jsonResult);
         JSONArray jArray = jObject.getJSONArray("app");
+        Log.d(TAG, "jArray and length " + jArray.length()); // + " " + jArray.length());
+
         for( int index = 0; index < jArray.length(); index++) {
+
             JSONObject arrayItem = jArray.getJSONObject(index);
-            String packageName = arrayItem.names().getString(0);
+            String packageName = arrayItem.getString("package");
             String title = arrayItem.getString("title");
             String creator = arrayItem.getString("creator");
             String priceAmount = arrayItem.getJSONObject("price").getString("amount");
@@ -57,6 +60,8 @@ public final class JsonParserUtility {
             }
 
         }
+
+
         return returnList;
     }
 

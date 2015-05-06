@@ -161,12 +161,12 @@ public class AppInfo {
         sb.append("Custom permissions: " + hasCustomPermissions + "\n");
         sb.append("Permissions:" + "\n");
         for( AppPermission permission : appPermissions ) {
-            sb.append(appPermissions.toString());
+            sb.append(permission.toString());
         }
         sb.append("Unusual Permissions:" + "\n");
         for( AppPermission permission : unusualPermissions ) {
-            sb.append(appPermissions.toString());
+            sb.append(permission.toString());
         }
-        return "";
+        return sb.toString();
     }
 }
