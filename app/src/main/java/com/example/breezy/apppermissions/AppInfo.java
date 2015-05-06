@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * Created by kristianhfischer on 5/5/15.
  */
+
 public class AppInfo {
 
     private final String packageName;
@@ -143,5 +144,29 @@ public class AppInfo {
 
     public boolean hasCustomPermissions() {
         return hasCustomPermissions;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Package name: " + packageName + "\n");
+        sb.append("Title: " + title + "\n");
+        sb.append("Creator: " + creator + "\n");
+        sb.append("Price amount: " + priceAmount + "\n");
+        sb.append("Price currency: " + priceCurrency + "\n");
+        sb.append("Icon url: " + iconUrl + "\n");
+        sb.append("Share url: " + shareUrl + "\n");
+        sb.append("Rating stars: " + ratingStars + "\n");
+        sb.append("Rating reviews: " + ratingReviews + "\n");
+        sb.append("Custom permissions: " + hasCustomPermissions + "\n");
+        sb.append("Permissions:" + "\n");
+        for( AppPermission permission : appPermissions ) {
+            sb.append(appPermissions.toString());
+        }
+        sb.append("Unusual Permissions:" + "\n");
+        for( AppPermission permission : unusualPermissions ) {
+            sb.append(appPermissions.toString());
+        }
+        return "";
     }
 }

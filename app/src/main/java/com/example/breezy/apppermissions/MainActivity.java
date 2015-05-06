@@ -1,6 +1,11 @@
 package com.example.breezy.apppermissions;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,11 +13,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
-    Button mCategorySearchButton;
-    EditText mCategoryEditText;
+    private Button mCategorySearchButton;
+    private EditText mCategoryEditText;
+    private MyPermissionDetectionService myPermissionService;
+    private MyPermissionDetectionService.IAppInformationListener myIAppInfoListener;
+
+    private boolean mBound;
 
 
     @Override
@@ -22,6 +33,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         mCategorySearchButton = (Button) findViewById(R.id.btsubmit);
         mCategoryEditText = (EditText) findViewById(R.id.etcategory);
         mCategorySearchButton.setOnClickListener(this);
+        myIAppInfoListener = new MyPermissionDetectionService.IAppInformationListener() {
+            @Override
+            public void onAppInformationRetrieved(List<AppInfo> appsReceived) {
+
+            }
+        };
+        mBound = false;
     }
 
 
@@ -51,7 +69,74 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onClick(View v) {
         switch( v.getId() ) {
             case R.id.btsubmit:
+                if( mBound ) {
+                    String query = mCategoryEditText.getText().toString();
+                    myPermissionService.queryPermissionDetectionServer(query);
+                } else {
+                    bindMyPermissionDetectionService();
+                }
                 break;
+        }
+    }
+
+    private void bindMyPermissionDetectionService() {
+        Intent boundIntent = new Intent(this, MyPermissionDetectionService.class);
+        bindService(boundIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void unbindMyPermissionDetectionService() {
+        myPermissionService.removePermissionRetrievalListener();
+        unbindService(mServiceConnection);
+    }
+
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MyPermissionDetectionService.MyBinder binder =
+                    (MyPermissionDetectionService.MyBinder) service;
+            myPermissionService = binder.getService();
+            myPermissionService.setPermissionRetrievalListener(myIAppInfoListener);
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {}
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(!mBound) {
+            bindMyPermissionDetectionService();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mBound) {
+            unbindMyPermissionDetectionService();
+            mBound = false;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if( !mBound ) {
+            bindMyPermissionDetectionService();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        //Unbind from the service
+        if (mBound) {
+            unbindMyPermissionDetectionService();
+            mBound = false;
         }
     }
 }

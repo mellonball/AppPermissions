@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.breezy.apppermissions" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +20,7 @@
         </activity>
 
         <service
-            android:name=".MyPermissionRetrievalService"
+            android:name=".MyPermissionDetectionService"
             android:enabled="true"
             android:exported="true" >
         </service>

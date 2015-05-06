@@ -19,4 +19,12 @@ public class AppPermission {
     public String getPermissionDescription() {
         return permissionDescription;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Permission Name: " + permissionName + "\n");
+        sb.append("Permission Description: " + permissionDescription + "\n");
+        return "";
+    }
 }
