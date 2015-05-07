@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -38,15 +41,22 @@ public class DisplayAppsList extends ListActivity {
         }
 
         populateListView();
-        //registerClickCallback();
+        registerClickCallback();
 
     }
 
-    /*private void registerClickCallback() {
+    private void registerClickCallback() {
         // set up on click listener then
         ListView list = (ListView) findViewById(android.R.id.list);
-        list.setOnClickListener();
-    }*/
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                String message = "You clicked app " + returnedList.get(position).getTitle();
+                Toast.makeText(DisplayAppsList.this, message, Toast.LENGTH_SHORT).show();
+                // THIS IS WHERE I WILL PASS THE INFO FOR THE APP THAT WAS CLICKED TO NEXT ACTIVITY FOR DISPLAYING
+            }
+        });
+    }
 
     private class MyCustomAdapter extends ArrayAdapter<AppInfo> {
 
@@ -87,6 +97,17 @@ public class DisplayAppsList extends ListActivity {
             holder.title.setText(app.getTitle());
             holder.creator.setText(app.getCreator());
             holder.rating.setRating((float) app.getRatingStars());
+            if (app.hasCustomPermissions() && app.getUnusualPermissions().size() == 0) {
+                row.setBackgroundColor(Color.YELLOW);
+                Log.d(TAG, app.getUnusualPermissions().toString() + " " + app.getUnusualPermissions().size() + " " + app.getTitle());
+
+            }
+            else if (app.getUnusualPermissions().size() != 0) {
+                row.setBackgroundColor(Color.RED);
+                Log.d(TAG, app.getUnusualPermissions().toString() + " " + app.getUnusualPermissions().size() + " " + app.getTitle());
+
+            }
+            else { row.setBackgroundColor(Color.GREEN);}
 
             return row;
         }
