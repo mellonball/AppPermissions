@@ -13,8 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.List;
-
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -35,8 +33,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         mCategorySearchButton.setOnClickListener(this);
         myIAppInfoListener = new MyPermissionDetectionService.IAppInformationListener() {
             @Override
-            public void onAppInformationRetrieved(List<AppInfo> appsReceived) {
+            public void onAppInformationRetrieved(String appsReceived) {
+                Intent intent = new Intent(MainActivity.this, DisplayAppsList.class);
 
+                intent.putExtra("appsReceived", appsReceived);
+                startActivity(intent);
             }
         };
         mBound = false;

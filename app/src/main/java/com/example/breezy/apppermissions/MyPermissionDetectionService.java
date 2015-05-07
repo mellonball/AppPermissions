@@ -15,7 +15,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.util.List;
 
 public class MyPermissionDetectionService extends Service {
 
@@ -39,7 +38,7 @@ public class MyPermissionDetectionService extends Service {
     }
 
     public interface IAppInformationListener {
-        public void onAppInformationRetrieved( List<AppInfo> appsReceived );
+        public void onAppInformationRetrieved( String appsReceived );
     }
 
     public void setPermissionRetrievalListener( IAppInformationListener listener )
@@ -65,15 +64,15 @@ public class MyPermissionDetectionService extends Service {
         myListener = null;
     }
 
-    private class GetAppPermissionsTask extends AsyncTask<String, Double, List<AppInfo>> {
+    private class GetAppPermissionsTask extends AsyncTask<String, Double, String> {
 
         @Override
-        protected List<AppInfo> doInBackground(String... params) {
+        protected String doInBackground(String... params) {
             String query = params[0];
             String Url = "http://52.5.30.209/googleplay-api-master/getapps.php?searchterm=" +
                     query;
 
-            List<AppInfo> returnAppList = null;
+            String returnAppList = null;
             try {
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpGet httpGet = new HttpGet(Url);
@@ -89,7 +88,7 @@ public class MyPermissionDetectionService extends Service {
                 istream.close();
                 Log.e("OUTPUT", "OUTPUT RESPONSE: " + buffer.toString());
 
-                returnAppList = JsonParserUtility.parseAppInfoList(buffer.toString());
+                returnAppList = buffer.toString();//JsonParserUtility.parseAppInfoList(buffer.toString());
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -105,7 +104,7 @@ public class MyPermissionDetectionService extends Service {
 
 
         @Override
-        protected void onPostExecute(List<AppInfo> appInfoList) {
+        protected void onPostExecute(String appInfoList) {
             super.onPostExecute(appInfoList);
             if( appInfoList != null ) {
                 if (myListener != null) {

@@ -24,6 +24,11 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name=".DisplayAppsList"
+            android:label="@string/title_activity_display_apps_list" >
+        </activity>
     </application>
 
 </manifest>

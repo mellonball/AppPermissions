@@ -24,7 +24,6 @@ public final class JsonParserUtility {
         List<AppInfo> returnList = new ArrayList<>();
         JSONObject jObject = new JSONObject(jsonResult);
         JSONArray jArray = jObject.getJSONArray("app");
-        Log.d(TAG, "jArray and length " + jArray.length()); // + " " + jArray.length());
 
         for( int index = 0; index < jArray.length(); index++) {
 
@@ -60,7 +59,6 @@ public final class JsonParserUtility {
             }
 
         }
-
 
         return returnList;
     }
