@@ -1,5 +1,6 @@
 package com.example.breezy.apppermissions;
 
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -22,6 +23,7 @@ public class MyPermissionDetectionService extends Service {
 
     private IBinder myBinder = new MyBinder();
     private IAppInformationListener myListener;
+    private MainActivity myMainActivity;
 
     public MyPermissionDetectionService() {
     }
@@ -44,6 +46,10 @@ public class MyPermissionDetectionService extends Service {
     public void setPermissionRetrievalListener( IAppInformationListener listener )
         { myListener = listener; }
 
+    public void setActivityProgressDialog(MainActivity activity) {
+        myMainActivity = activity;
+    }
+
     public void queryPermissionDetectionServer( String query ) {
         if(query != null) {
             query.trim();
@@ -65,6 +71,21 @@ public class MyPermissionDetectionService extends Service {
     }
 
     private class GetAppPermissionsTask extends AsyncTask<String, Double, String> {
+
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if( myMainActivity != null) {
+                dialog = new ProgressDialog(myMainActivity);
+                dialog.setMessage("Loading...");
+                dialog.setIndeterminate(false);
+                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                dialog.setCancelable(true);
+                dialog.show();
+            }
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -106,6 +127,7 @@ public class MyPermissionDetectionService extends Service {
         @Override
         protected void onPostExecute(String appInfoList) {
             super.onPostExecute(appInfoList);
+            if(dialog != null) dialog.dismiss();
             if( appInfoList != null ) {
                 if (myListener != null) {
                     myListener.onAppInformationRetrieved(appInfoList);

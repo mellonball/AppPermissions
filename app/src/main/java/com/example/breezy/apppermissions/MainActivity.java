@@ -98,6 +98,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     (MyPermissionDetectionService.MyBinder) service;
             myPermissionService = binder.getService();
             myPermissionService.setPermissionRetrievalListener(myIAppInfoListener);
+            myPermissionService.setActivityProgressDialog(MainActivity.this);
             mBound = true;
         }
 
