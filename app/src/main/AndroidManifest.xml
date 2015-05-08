@@ -29,6 +29,10 @@
             android:name=".DisplayAppsList"
             android:label="@string/title_activity_display_apps_list" >
         </activity>
+        <activity
+            android:name=".ApplicationInfoActivity"
+            android:label="@string/title_activity_application_info" >
+        </activity>
     </application>
 
 </manifest>

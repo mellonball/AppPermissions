@@ -1,7 +1,5 @@
 package com.example.breezy.apppermissions;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,14 +45,14 @@ public final class JsonParserUtility {
                         ratingStars(ratingStars).ratingReviews(ratingsCount).shareUrl(shareUrl).
                         hasCustomPermissions(isCustom).appPermissions(permissions).
                         unusualPermissions(unusualPermissions).build();
-                Log.d(TAG, "Adding info: \n" + appInfo.toString());
+                //Log.d(TAG, "Adding info: \n" + appInfo.toString());
                 returnList.add(appInfo);
             } else {
                 AppInfo appInfo = new AppInfo.Builder(packageName, title, creator).
                         priceAmount(priceAmount).priceCurrency(priceCurrency).iconUrl(iconUrl).
                         ratingStars(ratingStars).ratingReviews(ratingsCount).shareUrl(shareUrl).
                         hasCustomPermissions(isCustom).appPermissions(permissions).build();
-                Log.d(TAG, "Adding info: \n" + appInfo.toString());
+                //Log.d(TAG, "Adding info: \n" + appInfo.toString());
                 returnList.add(appInfo);
             }
 

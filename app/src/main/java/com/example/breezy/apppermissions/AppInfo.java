@@ -1,5 +1,8 @@
 package com.example.breezy.apppermissions;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +10,7 @@ import java.util.List;
  * Created by kristianhfischer on 5/5/15.
  */
 
-public class AppInfo {
+public class AppInfo implements Parcelable{
 
     private final String packageName;
     private final String title;
@@ -21,6 +24,58 @@ public class AppInfo {
     private final double ratingStars;
     private final double ratingReviews;
     private final boolean hasCustomPermissions;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(packageName);
+        dest.writeString(title);
+        dest.writeString(creator);
+        dest.writeString(priceAmount);
+        dest.writeString(priceCurrency);
+        dest.writeString(iconUrl);
+        dest.writeString(shareUrl);
+        dest.writeTypedList(appPermissions);
+        dest.writeTypedList(unusualPermissions);
+        dest.writeDouble(ratingStars);
+        dest.writeDouble(ratingReviews);
+        dest.writeByte( (byte) (hasCustomPermissions ? 1 : 0) );
+    }
+
+    public AppInfo (Parcel parcel) {
+        this.packageName = parcel.readString();
+        this.title = parcel.readString();
+        this.creator = parcel.readString();
+        this.priceAmount = parcel.readString();
+        this.priceCurrency = parcel.readString();
+        this.iconUrl = parcel.readString();
+        this.shareUrl = parcel.readString();
+        this.appPermissions = new ArrayList<>();
+        parcel.readTypedList(appPermissions, AppPermission.CREATOR);
+        this.unusualPermissions = new ArrayList<>();
+        parcel.readTypedList(unusualPermissions, AppPermission.CREATOR);
+        this.ratingStars = parcel.readDouble();
+        this.ratingReviews = parcel.readDouble();
+        this.hasCustomPermissions = parcel.readByte() != 0;
+    }
+
+    public static Creator<AppInfo> CREATOR = new Creator<AppInfo>() {
+
+        @Override
+        public AppInfo createFromParcel(Parcel source) {
+            return new AppInfo(source);
+        }
+
+        @Override
+        public AppInfo[] newArray(int size) {
+            return new AppInfo[size];
+        }
+
+    };
 
     public static class Builder {
         private final String packageName;
