@@ -5,18 +5,24 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 
@@ -89,7 +95,7 @@ public class DisplayAppsList extends ListActivity {
                 holder.title = (TextView)row.findViewById(R.id.tvTitle);
                 holder.creator = (TextView)row.findViewById(R.id.tvCreator);
                 holder.rating = (RatingBar)row.findViewById(R.id.ratingBar);
-
+                holder.icon = (ImageView)row.findViewById(R.id.ivIcon);
                 row.setTag(holder);
             }
             else
@@ -112,6 +118,11 @@ public class DisplayAppsList extends ListActivity {
 
             }
             else { row.setBackgroundColor(Color.GREEN);}
+            //holder.icon.setImageDrawable(LoadImageFromWebOperations(app.getIconUrl()));
+            //pass url as tag on holder.icon. Then pass holder.icon, the imageview, to asynctask
+            holder.icon.setTag(app.getIconUrl());
+
+            new RetrieveFeedTask().execute(holder.icon);
 
             return row;
         }
@@ -119,11 +130,40 @@ public class DisplayAppsList extends ListActivity {
 
 
     }
+
+    class RetrieveFeedTask extends AsyncTask<ImageView, Void, Drawable> {
+
+        private Exception exception;
+
+        protected Drawable doInBackground(ImageView... imageView) {
+            try {
+
+                        InputStream is = (InputStream) new URL((String) imageView[0].getTag()).getContent();
+                        Drawable d = Drawable.createFromStream(is, "src name");
+                        imageView[0].setImageDrawable(d);
+                        Log.d(TAG, "is d null? " + d);
+                        return d;
+
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        protected void onPostExecute(Drawable icon) {
+
+        }
+    }
+
+
     static class AppInfoHolder
     {
         TextView title;
         TextView creator;
         RatingBar rating;
+        ImageView icon;
     }
 
     private void populateListView() {
