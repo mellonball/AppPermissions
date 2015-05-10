@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">AppPermissions</string>
+    <string name="app_name">App Permissions</string>
 
     <string name="welcome">Welcome to AppPermissions! \n\nEnter an app category (weather, flashlight...) and we will return all the apps that match form the Google Play Store.</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_display_apps_list">DisplayAppsList</string>
+    <string name="title_activity_display_apps_list">Apps</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_application_info">ApplicationInfoActivity</string>
+    <string name="title_activity_application_info">App Details</string>
 </resources>

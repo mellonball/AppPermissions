@@ -1,11 +1,11 @@
 package com.example.breezy.apppermissions;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +23,7 @@ import org.json.JSONException;
 import java.util.List;
 
 
-public class DisplayAppsList extends ListActivity {
+public class DisplayAppsList extends ActionBarActivity {
 
     private static final String TAG = DisplayAppsList.class.getCanonicalName();
     private static final String MENU_MORE_INFO = "More info";
@@ -50,15 +50,12 @@ public class DisplayAppsList extends ListActivity {
     }
 
     private void registerClickCallback() {
-        // set up on click listener then
+        // set up on click listener
         ListView list = (ListView) findViewById(android.R.id.list);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                //String message = "You clicked app " + returnedList.get(position).getTitle();
-                //Toast.makeText(DisplayAppsList.this, message, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(DisplayAppsList.this, ApplicationInfoActivity.class);
-                //Log.d(TAG, "Sending " + adapter.getItem(position).toString());
                 intent.putExtra("appInfo", adapter.getItem(position));
                 startActivity(intent);
             }
@@ -119,47 +116,11 @@ public class DisplayAppsList extends ListActivity {
 
             }
             else { row.setBackgroundColor(Color.GREEN);}
-            //holder.icon.setTag(app.getIconUrl());
-
-            //new RetrieveFeedTask().execute(holder.icon);
-            //holder.icon.
-
 
             return row;
         }
 
-
-
     }
-
-    /*
-    class RetrieveFeedTask extends AsyncTask<ImageView, Void, Drawable> {
-
-        private Exception exception;
-
-        protected Drawable doInBackground(ImageView... imageView) {
-            try {
-
-                        InputStream is = (InputStream) new URL((String) imageView[0].getTag()).getContent();
-                        Drawable d = Drawable.createFromStream(is, "src name");
-                        imageView[0].setImageDrawable(d);
-                        Log.d(TAG, "is d null? " + d);
-                        return d;
-
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        protected void onPostExecute(Drawable icon) {
-
-        }
-    }
-    */
-
 
     static class AppInfoHolder
     {
