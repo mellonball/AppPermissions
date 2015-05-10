@@ -100,7 +100,11 @@ public class DisplayAppsList extends ListActivity {
                 holder = (AppInfoHolder)row.getTag();
             }
 
+
             AppInfo app = this.items.get(position);
+            Picasso.with(this.context)
+                    .load(app.getIconUrl())
+                    .into(holder.icon);
             holder.title.setText(app.getTitle());
             holder.creator.setText(app.getCreator());
             holder.rating.setRating((float) app.getRatingStars());
@@ -119,10 +123,7 @@ public class DisplayAppsList extends ListActivity {
 
             //new RetrieveFeedTask().execute(holder.icon);
             //holder.icon.
-            Picasso.with(this.context)
-                    .load(app.getIconUrl())
-                    .fit()
-                    .into(holder.icon);
+
 
             return row;
         }
