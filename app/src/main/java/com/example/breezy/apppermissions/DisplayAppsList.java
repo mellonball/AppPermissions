@@ -106,16 +106,16 @@ public class DisplayAppsList extends ActionBarActivity {
             holder.creator.setText(app.getCreator());
             holder.rating.setRating((float) app.getRatingStars());
             if (app.hasCustomPermissions() && app.getUnusualPermissions().size() == 0) {
-                row.setBackgroundColor(Color.YELLOW);
+                row.setBackgroundColor(Color.parseColor("#ffff7f")); //yellow
                 //Log.d(TAG, app.getUnusualPermissions().toString() + " " + app.getUnusualPermissions().size() + " " + app.getTitle());
 
             }
             else if (app.getUnusualPermissions().size() != 0) {
-                row.setBackgroundColor(Color.RED);
+                row.setBackgroundColor(Color.parseColor("#ff6666")); //red
                 //Log.d(TAG, app.getUnusualPermissions().toString() + " " + app.getUnusualPermissions().size() + " " + app.getTitle());
 
             }
-            else { row.setBackgroundColor(Color.GREEN);}
+            else { row.setBackgroundColor(Color.parseColor("#7fe67f"));}  //green
 
             return row;
         }

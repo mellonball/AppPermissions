@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="?android:attr/listPreferredItemHeight">
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="2dp">
 
 
     <ImageView
@@ -12,47 +13,45 @@
         android:gravity="center_vertical"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:paddingRight="2dp"
+        android:paddingEnd="2dp"
         />
 
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:id="@+id/tvTitle"
-    android:layout_alignParentTop="true"
-    android:scrollHorizontally="true"
-    android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/tvTitle"
+        android:layout_alignParentTop="true"
+        android:scrollHorizontally="true"
+        android:gravity="center_vertical"
         android:layout_toRightOf="@id/ivIcon"
         android:layout_toEndOf="@id/ivIcon"
         android:singleLine="true"
-
+        android:textStyle="bold"
         />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceSmall"
-    android:id="@+id/tvCreator"
-    android:layout_below="@+id/tvTitle"
-    android:layout_toRightOf="@id/ivIcon"
-    android:layout_toEndOf="@id/ivIcon"
-    android:singleLine="true"
-    android:scrollHorizontally="true"
-
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/tvCreator"
+        android:layout_below="@+id/tvTitle"
+        android:layout_toRightOf="@id/ivIcon"
+        android:layout_toEndOf="@id/ivIcon"
+        android:singleLine="true"
+        android:scrollHorizontally="true"
     />
 
-<RatingBar
-    style = "?android:attr/ratingBarStyleSmall"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/ratingBar"
-    android:layout_below="@+id/tvCreator"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentEnd="true"
-
-
+    <RatingBar
+        style = "?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:layout_below="@+id/tvCreator"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
     />
 
 
