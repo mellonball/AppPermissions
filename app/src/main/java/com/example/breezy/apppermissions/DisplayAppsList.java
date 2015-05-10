@@ -121,6 +121,7 @@ public class DisplayAppsList extends ListActivity {
             //holder.icon.
             Picasso.with(this.context)
                     .load(app.getIconUrl())
+                    .fit()
                     .into(holder.icon);
 
             return row;
