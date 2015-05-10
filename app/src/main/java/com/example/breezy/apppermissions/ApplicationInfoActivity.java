@@ -46,9 +46,17 @@ public class ApplicationInfoActivity extends ActionBarActivity implements View.O
         addTextViewTitle("Permissions");
 
         icon = (ImageView) findViewById(R.id.ivDetailIcon);
-        Picasso.with(this)
-                .load(myAppInfo.getIconUrl())
-                .into(icon);
+        if (myAppInfo.getIconUrl().equals(""))
+        {
+            Picasso.with(this)
+                    .load(R.mipmap.no_icon)
+                    .into(icon);
+        }
+        else {
+            Picasso.with(this)
+                    .load(myAppInfo.getIconUrl())
+                    .into(icon);
+        }
 
         for( AppPermission permission : myAppInfo.getAppPermissions() ) {
             addTextViewValue(permission.getPermissionName());

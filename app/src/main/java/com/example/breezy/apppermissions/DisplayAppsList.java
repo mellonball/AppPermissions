@@ -97,11 +97,18 @@ public class DisplayAppsList extends ActionBarActivity {
                 holder = (AppInfoHolder)row.getTag();
             }
 
-
             AppInfo app = this.items.get(position);
-            Picasso.with(this.context)
-                    .load(app.getIconUrl())
-                    .into(holder.icon);
+            if (app.getIconUrl().equals(""))
+            {
+                Picasso.with(this.context)
+                        .load(R.mipmap.no_icon)
+                        .into(holder.icon);
+            }
+            else {
+                Picasso.with(this.context)
+                        .load(app.getIconUrl())
+                        .into(holder.icon);
+            }
             holder.title.setText(app.getTitle());
             holder.creator.setText(app.getCreator());
             holder.rating.setRating((float) app.getRatingStars());
