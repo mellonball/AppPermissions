@@ -15,22 +15,19 @@
         android:layout_height="wrap_content"
         android:id="@+id/etcategory"
         android:hint="Enter an app category..."
+        android:layout_marginTop="41dp"
         android:layout_below="@+id/tvwelcome"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="31dp" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
         android:id="@+id/btsubmit"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/etcategory"
-        android:layout_alignLeft="@+id/etcategory"
-        android:layout_alignStart="@+id/etcategory" />
+        android:layout_alignTop="@+id/etcategory"
+        android:layout_toRightOf="@+id/etcategory"
+        android:layout_toEndOf="@+id/etcategory" />
 
 
 </RelativeLayout>

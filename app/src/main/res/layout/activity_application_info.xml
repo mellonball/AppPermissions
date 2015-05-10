@@ -13,6 +13,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="?android:attr/listPreferredItemHeight"
+            android:layout_height="?android:attr/listPreferredItemHeight"
+            android:id="@+id/ivDetailIcon"/>
+
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

@@ -9,9 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 
 public class ApplicationInfoActivity extends ActionBarActivity implements View.OnClickListener {
@@ -19,6 +22,7 @@ public class ApplicationInfoActivity extends ActionBarActivity implements View.O
     ScrollView myScrollLayout;
     LinearLayout myLayout;
     Button myDownloadButton;
+    ImageView icon;
 
 
     @Override
@@ -27,8 +31,10 @@ public class ApplicationInfoActivity extends ActionBarActivity implements View.O
         setContentView(R.layout.activity_application_info);
         //getActionBar().setTitle("Application Information");
         myScrollLayout = (ScrollView) findViewById(R.id.application_info_layout);
+
         myLayout = (LinearLayout) myScrollLayout.getChildAt(0);
         Intent i = getIntent();
+
         myAppInfo = i.getParcelableExtra("appInfo");
         addTextViewTitleAndValue("App Name", myAppInfo.getTitle());
         addTextViewTitleAndValue("Creator", myAppInfo.getCreator());
@@ -38,6 +44,12 @@ public class ApplicationInfoActivity extends ActionBarActivity implements View.O
         addTextViewTitleAndValue("Rating", Double.toString(myAppInfo.getRatingStars()));
         addTextViewTitleAndValue("Reviews", Double.toString(myAppInfo.getRatingReviews()));
         addTextViewTitle("Permissions");
+
+        icon = (ImageView) findViewById(R.id.ivDetailIcon);
+        Picasso.with(this)
+                .load(myAppInfo.getIconUrl())
+                .into(icon);
+
         for( AppPermission permission : myAppInfo.getAppPermissions() ) {
             addTextViewValue(permission.getPermissionName());
         }

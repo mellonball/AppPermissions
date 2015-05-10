@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App Permissions</string>
+    <string name="app_name">Search for App Category</string>
 
     <string name="welcome">Welcome to AppPermissions! \n\nEnter an app category (weather, flashlight...) and we will return all the apps that match form the Google Play Store.</string>
     <string name="action_settings">Settings</string>
