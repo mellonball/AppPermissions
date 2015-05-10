@@ -5,10 +5,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +16,10 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONException;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 
 
@@ -118,11 +115,13 @@ public class DisplayAppsList extends ListActivity {
 
             }
             else { row.setBackgroundColor(Color.GREEN);}
-            //holder.icon.setImageDrawable(LoadImageFromWebOperations(app.getIconUrl()));
-            //pass url as tag on holder.icon. Then pass holder.icon, the imageview, to asynctask
-            holder.icon.setTag(app.getIconUrl());
+            //holder.icon.setTag(app.getIconUrl());
 
-            new RetrieveFeedTask().execute(holder.icon);
+            //new RetrieveFeedTask().execute(holder.icon);
+            //holder.icon.
+            Picasso.with(this.context)
+                    .load(app.getIconUrl())
+                    .into(holder.icon);
 
             return row;
         }
@@ -131,6 +130,7 @@ public class DisplayAppsList extends ListActivity {
 
     }
 
+    /*
     class RetrieveFeedTask extends AsyncTask<ImageView, Void, Drawable> {
 
         private Exception exception;
@@ -156,6 +156,7 @@ public class DisplayAppsList extends ListActivity {
 
         }
     }
+    */
 
 
     static class AppInfoHolder
