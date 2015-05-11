@@ -65,6 +65,11 @@ public class ApplicationInfoActivity extends ActionBarActivity implements View.O
         for( AppPermission permission : myAppInfo.getUnusualPermissions() ) {
             addTextViewValue(permission.getPermissionName());
         }
+
+        addTextViewTitle("Dangerous Permissions");
+        for( AppPermission permission : myAppInfo.getDangerousPermissions() ) {
+            addTextViewValue(permission.getPermissionName());
+        }
         myDownloadButton = (Button) findViewById(R.id.download_app_button);
         myDownloadButton.setOnClickListener(this);
     }

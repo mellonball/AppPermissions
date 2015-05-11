@@ -38,22 +38,52 @@ public final class JsonParserUtility {
             String isCustom = arrayItem.getString("custom");
             List<AppPermission> permissions = parsePermissions(arrayItem.getJSONArray("permissions"));
             List<AppPermission> unusualPermissions = null;
+
+            List<AppPermission> dangerousPermissions = null;
             if( arrayItem.getBoolean("unusual")) {
-                unusualPermissions = parsePermissions(arrayItem.getJSONArray("unusual_perms"));
-                AppInfo appInfo = new AppInfo.Builder(packageName, title, creator).
-                        priceAmount(priceAmount).priceCurrency(priceCurrency).iconUrl(iconUrl).
-                        ratingStars(ratingStars).ratingReviews(ratingsCount).shareUrl(shareUrl).
-                        hasCustomPermissions(isCustom).appPermissions(permissions).
-                        unusualPermissions(unusualPermissions).build();
-                //Log.d(TAG, "Adding info: \n" + appInfo.toString());
-                returnList.add(appInfo);
+                if( arrayItem.getBoolean("dangerous")) {
+                    unusualPermissions = parsePermissions(arrayItem.getJSONArray("unusual_perms"));
+                    dangerousPermissions = parsePermissions(arrayItem.getJSONArray("dangerous_permissions"));
+
+                    AppInfo appInfo = new AppInfo.Builder(packageName, title, creator).
+                            priceAmount(priceAmount).priceCurrency(priceCurrency).iconUrl(iconUrl).
+                            ratingStars(ratingStars).ratingReviews(ratingsCount).shareUrl(shareUrl).
+                            hasCustomPermissions(isCustom).appPermissions(permissions).
+                            unusualPermissions(unusualPermissions).
+                            dangerousPermissions(dangerousPermissions).build();
+                    //Log.d(TAG, "Adding info: \n" + appInfo.toString());
+                    returnList.add(appInfo);
+                }
+                else {
+                    unusualPermissions = parsePermissions(arrayItem.getJSONArray("unusual_perms"));
+                    AppInfo appInfo = new AppInfo.Builder(packageName, title, creator).
+                            priceAmount(priceAmount).priceCurrency(priceCurrency).iconUrl(iconUrl).
+                            ratingStars(ratingStars).ratingReviews(ratingsCount).shareUrl(shareUrl).
+                            hasCustomPermissions(isCustom).appPermissions(permissions).
+                            unusualPermissions(unusualPermissions).build();
+                }
             } else {
-                AppInfo appInfo = new AppInfo.Builder(packageName, title, creator).
-                        priceAmount(priceAmount).priceCurrency(priceCurrency).iconUrl(iconUrl).
-                        ratingStars(ratingStars).ratingReviews(ratingsCount).shareUrl(shareUrl).
-                        hasCustomPermissions(isCustom).appPermissions(permissions).build();
-                //Log.d(TAG, "Adding info: \n" + appInfo.toString());
-                returnList.add(appInfo);
+                if (arrayItem.getBoolean("dangerous"))
+                {
+                    dangerousPermissions = parsePermissions(arrayItem.getJSONArray("dangerous_permissions"));
+
+                    AppInfo appInfo = new AppInfo.Builder(packageName, title, creator).
+                            priceAmount(priceAmount).priceCurrency(priceCurrency).iconUrl(iconUrl).
+                            ratingStars(ratingStars).ratingReviews(ratingsCount).shareUrl(shareUrl).
+                            hasCustomPermissions(isCustom).appPermissions(permissions).
+                            dangerousPermissions(dangerousPermissions).build();
+                    //Log.d(TAG, "Adding info: \n" + appInfo.toString());
+                    returnList.add(appInfo);
+                }
+                else {
+                    AppInfo appInfo = new AppInfo.Builder(packageName, title, creator).
+                            priceAmount(priceAmount).priceCurrency(priceCurrency).iconUrl(iconUrl).
+                            ratingStars(ratingStars).ratingReviews(ratingsCount).shareUrl(shareUrl).
+                            hasCustomPermissions(isCustom).appPermissions(permissions).build();
+                    //Log.d(TAG, "Adding info: \n" + appInfo.toString());
+                    returnList.add(appInfo);
+
+                }
             }
 
         }

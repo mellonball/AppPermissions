@@ -25,6 +25,9 @@ public class AppInfo implements Parcelable{
     private final double ratingReviews;
     private final boolean hasCustomPermissions;
 
+    private final List<AppPermission> dangerousPermissions;
+    //private final boolean hasDangerousPermissions;
+
     @Override
     public int describeContents() {
         return 0;
@@ -44,6 +47,10 @@ public class AppInfo implements Parcelable{
         dest.writeDouble(ratingStars);
         dest.writeDouble(ratingReviews);
         dest.writeByte( (byte) (hasCustomPermissions ? 1 : 0) );
+
+        //dest.writeByte( (byte) (hasDangerousPermissions ? 1 : 0) );
+        dest.writeTypedList(dangerousPermissions);
+
     }
 
     public AppInfo (Parcel parcel) {
@@ -61,6 +68,9 @@ public class AppInfo implements Parcelable{
         this.ratingStars = parcel.readDouble();
         this.ratingReviews = parcel.readDouble();
         this.hasCustomPermissions = parcel.readByte() != 0;
+
+        this.dangerousPermissions = new ArrayList<>();
+        parcel.readTypedList(dangerousPermissions, AppPermission.CREATOR);
     }
 
     public static Creator<AppInfo> CREATOR = new Creator<AppInfo>() {
@@ -91,6 +101,10 @@ public class AppInfo implements Parcelable{
         private double ratingStars = 0;
         private double ratingReviews = 0;
         private boolean hasCustomPermissions = false;
+
+        //private boolean hasDangerousPermissions = false;
+        private List<AppPermission> dangerousPermissions = new ArrayList<>();
+
 
         public Builder( String packageName, String title, String creator ) {
             this.packageName = packageName;
@@ -133,6 +147,9 @@ public class AppInfo implements Parcelable{
             return this;
         }
 
+        public Builder dangerousPermissions(List<AppPermission> value)
+        {dangerousPermissions = value; return this;}
+
         public AppInfo build() {
             return new AppInfo(this);
         }
@@ -151,6 +168,8 @@ public class AppInfo implements Parcelable{
         ratingStars = builder.ratingStars;
         ratingReviews = builder.ratingReviews;
         hasCustomPermissions = builder.hasCustomPermissions;
+
+        dangerousPermissions = builder.dangerousPermissions;
     }
 
     public String getPackageName() {
@@ -189,6 +208,10 @@ public class AppInfo implements Parcelable{
         return unusualPermissions;
     }
 
+    public List<AppPermission> getDangerousPermissions() {
+        return dangerousPermissions;
+    }
+
     public double getRatingStars() {
         return ratingStars;
     }
@@ -220,6 +243,11 @@ public class AppInfo implements Parcelable{
         }
         sb.append("Unusual Permissions:" + "\n");
         for( AppPermission permission : unusualPermissions ) {
+            sb.append(permission.toString());
+        }
+
+        sb.append("Dangerous Permissions:" + "\n");
+        for( AppPermission permission : dangerousPermissions ) {
             sb.append(permission.toString());
         }
         return sb.toString();
